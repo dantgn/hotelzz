@@ -27,3 +27,4 @@ Hotel.all.each do |hotel|
     hotel.hotel_rooms.create(room_type_id: room_type.id, number: index + 1)
   end
 end
+Admin.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
