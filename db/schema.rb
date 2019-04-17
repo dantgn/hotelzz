@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_17_081028) do
+ActiveRecord::Schema.define(version: 2019_04_17_152538) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,6 +95,16 @@ ActiveRecord::Schema.define(version: 2019_04_17_081028) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "room_type_prices", force: :cascade do |t|
+    t.bigint "room_type_id"
+    t.string "currency", default: "usd", null: false
+    t.decimal "amount", precision: 8, scale: 2, null: false
+    t.integer "month", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["room_type_id"], name: "index_room_type_prices_on_room_type_id"
+  end
+
   create_table "room_types", force: :cascade do |t|
     t.bigint "hotel_id"
     t.string "name"
@@ -110,5 +120,6 @@ ActiveRecord::Schema.define(version: 2019_04_17_081028) do
   add_foreign_key "bookings", "room_types"
   add_foreign_key "hotel_rooms", "hotels"
   add_foreign_key "hotel_rooms", "room_types"
+  add_foreign_key "room_type_prices", "room_types"
   add_foreign_key "room_types", "hotels"
 end

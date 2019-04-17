@@ -68,3 +68,11 @@ Booking.create!(
   check_in: 1.day.from_now,
   check_out: 31.days.from_now
 )
+
+# create room prices sample
+
+RoomType.all.each do |room|
+  12.times do |i|
+    room.room_type_prices.create!(month: (i + 1), currency: 'usd', amount: 1200)
+  end
+end
