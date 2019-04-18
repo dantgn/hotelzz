@@ -42,6 +42,10 @@ gem 'activeadmin'
 # user authentication
 gem 'devise'
 
+# API Framework
+gem 'grape'
+gem 'grape-entity'
+
 # credit card payments
 gem 'stripe'
 

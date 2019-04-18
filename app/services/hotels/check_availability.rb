@@ -20,14 +20,23 @@ module Hotels
     end
 
     def room_types_availability
-      list = {}
+      list = []
 
       booked = booked_room_types
       room_types = @hotel.room_types
       room_types = room_types.where('occupancy_limit >= ?', @guests) if @guests
 
       room_types.each do |room_type|
-        list[room_type.id] = available_rooms(booked[room_type.id], room_type)
+        list << {
+          'name' => room_type.name,
+          'totalRooms' => room_type.number_of_rooms,
+          'availableRooms' => available_rooms(booked[room_type.id], room_type),
+          'rent' => ::Hotels::CalculateRent.new(
+            room_type: room_type,
+            check_in: @check_in,
+            check_out: @check_out
+          ).call
+        }
       end
 
       list
@@ -37,7 +46,10 @@ module Hotels
       bookings = @hotel.bookings.paid
       bookings = bookings.joins(:room_type).where('occupancy_limit >= ?', @guests) if @guests
       bookings.
-        where('(? BETWEEN check_in AND check_out) OR (? BETWEEN check_in AND check_out)', @check_in, @check_out).
+        where(
+          '(? BETWEEN check_in AND check_out) OR (? BETWEEN check_in AND check_out)',
+          @check_in, @check_out
+        ).
         group(:room_type_id).
         count
     end
