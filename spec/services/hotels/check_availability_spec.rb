@@ -27,14 +27,28 @@ RSpec.describe Hotels::CheckAvailability do
       {
         'name' => room_type1.name,
         'totalRooms' => room_type1.number_of_rooms,
-        'availableRooms' => room_type1.number_of_rooms
+        'availableRooms' => room_type1.number_of_rooms,
+        'rent' => rent
       },
       {
         'name' => room_type2.name,
         'totalRooms' => room_type2.number_of_rooms,
-        'availableRooms' => room_type2.number_of_rooms
+        'availableRooms' => room_type2.number_of_rooms,
+        'rent' => rent
       }
     ]
+  end
+  let(:rent) { '1200 usd' }
+  let(:calculate_rent_service) { instance_double(Hotels::CalculateRent) }
+
+  before do
+    allow(Hotels::CalculateRent).
+      to receive(:new).
+      and_return(calculate_rent_service)
+
+    allow(calculate_rent_service).
+      to receive(:call).
+      and_return(rent)
   end
 
   describe '#call' do
@@ -100,12 +114,14 @@ RSpec.describe Hotels::CheckAvailability do
           {
             'name' => room_type1.name,
             'totalRooms' => room_type1.number_of_rooms,
-            'availableRooms' => room_type1.number_of_rooms - 1
+            'availableRooms' => room_type1.number_of_rooms - 1,
+            'rent' => rent
           },
           {
             'name' => room_type2.name,
             'totalRooms' => room_type2.number_of_rooms,
-            'availableRooms' => room_type2.number_of_rooms - 1
+            'availableRooms' => room_type2.number_of_rooms - 1,
+            'rent' => rent
           }
         ]
       end
