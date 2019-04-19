@@ -8,6 +8,7 @@ module HotelzzAPI
 
       mount HotelzzAPI::V1::Hotels
       mount HotelzzAPI::V1::Bookings
+      mount HotelzzAPI::V1::RoomTypes
     end
   end
 end

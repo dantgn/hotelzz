@@ -1,11 +1,12 @@
 module HotelzzAPI
   module Helpers
     module JwtAuthenticationHelper
-      def authenticated_jwt_guest?
+      def jwt_authenticated_user(user_class)
         auth_token = request.headers['Authorization']
         begin
           decoded = ::Authentication::JsonWebToken.decode(auth_token)
-          Guest.find(decoded[:guest_id])
+          klass = user_class.safe_constantize
+          klass.find(decoded[:user_id])
         rescue ActiveRecord::RecordNotFound
           error!('401 Unauthorized', 401)
         end

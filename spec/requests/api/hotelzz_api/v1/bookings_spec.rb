@@ -64,7 +64,7 @@ RSpec.describe HotelzzAPI::V1::Bookings, type: :request do
           before do
             allow(Authentication::JsonWebToken).
               to receive(:decode).
-              and_return(guest_id: guest.id)
+              and_return(user_id: guest.id)
           end
 
           context 'and no bookings for selected dates available' do

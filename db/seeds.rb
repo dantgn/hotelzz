@@ -5,11 +5,17 @@
 
 return unless Rails.env.development?
 
+hotel_manager = HotelManager.create!(
+  email: 'hmanager@example.com',
+  password: 'password',
+  password_confirmation: 'password'
+)
+
 # create hotels
 Hotel.create!(
   [
-    { name: 'The Grand Hotel Budapest' },
-    { name: 'Tarraco Hotel' }
+    { name: 'The Grand Hotel Budapest', hotel_manager: hotel_manager },
+    { name: 'Tarraco Hotel', hotel_manager: hotel_manager }
   ]
 )
 

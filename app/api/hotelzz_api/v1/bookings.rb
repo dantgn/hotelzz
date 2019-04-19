@@ -13,7 +13,7 @@ module HotelzzAPI
           requires :room_type_id, type: Integer, desc: 'ID of the Room type to book'
         end
         post do
-          raise Errors::AuthenticationError unless (guest = authenticated_jwt_guest?)
+          raise Errors::AuthenticationError unless (guest = jwt_authenticated_user('Guest'))
 
           room_type = RoomType.find(params[:room_type_id])
           check_in = params[:check_in].to_date

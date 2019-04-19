@@ -3,6 +3,7 @@ module HotelzzAPI
     extend ActiveSupport::Concern
 
     AuthenticationError = Class.new(StandardError)
+    AuthorizationError = Class.new(StandardError)
     UnavailableBookingForRoomType = Class.new(StandardError)
     BookingPaymentFailed = Class.new(StandardError)
 
@@ -15,7 +16,7 @@ module HotelzzAPI
         error!('Payment transaction failed!', 422)
       end
 
-      rescue_from JWT::DecodeError, AuthenticationError do
+      rescue_from JWT::DecodeError, AuthenticationError, AuthorizationError do
         error!('401 Unauthorized', 401)
       end
     end
