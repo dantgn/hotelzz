@@ -4,7 +4,7 @@ module HotelzzAPI
       class HotelEntity < Grape::Entity
         expose :id
         expose :name
-        expose :room_types, using: HotelzzAPI::Entities::V1::Light::RoomTypeEntity
+        expose :room_types, using: HotelzzAPI::Entities::V1::RoomTypeEntity
       end
     end
   end

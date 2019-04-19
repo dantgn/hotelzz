@@ -63,5 +63,13 @@ RSpec.describe Hotels::CalculateRent do
         expect(subject).to eq('37.29 usd/night')
       end
     end
+
+    describe '#amount' do
+      subject { service.amount }
+
+      it 'returns amount without currency' do
+        expect(subject).to eq(1000.0)
+      end
+    end
   end
 end

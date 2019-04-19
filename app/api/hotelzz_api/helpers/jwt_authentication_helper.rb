@@ -6,7 +6,7 @@ module HotelzzAPI
         begin
           decoded = ::Authentication::JsonWebToken.decode(auth_token)
           Guest.find(decoded[:guest_id])
-        rescue JWT::DecodeError, ActiveRecord::RecordNotFound
+        rescue ActiveRecord::RecordNotFound
           error!('401 Unauthorized', 401)
         end
       end

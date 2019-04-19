@@ -5,6 +5,7 @@ module HotelzzAPI
         expose :id
         expose :name
         expose :occupancy_limit
+        expose :hotel_id
       end
     end
   end

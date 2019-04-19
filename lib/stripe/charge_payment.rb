@@ -29,15 +29,16 @@ module Stripe
 
     def charge!
       Stripe::Charge.create(
-        amount: amount_in_cents,
+        amount: integer_amount_in_cents,
         currency: @currency,
         source: @source, # obtained in frontend with Stripe.js
         description: "Charge for #{@booking.guest.email}, hotelzz booking '#{@booking.id}'"
       )
     end
 
-    def amount_in_cents
-      @amount * 100
+    # Stripe payment amount requirements
+    def integer_amount_in_cents
+      (@amount * 100).to_i
     end
 
     def store_payment_details(response:, info: nil)

@@ -11,6 +11,10 @@ module Hotels
       "#{total_rent} #{@currency}"
     end
 
+    def amount
+      total_rent
+    end
+
     def average
       "#{night_price} #{@currency}/night"
     end
