@@ -46,6 +46,9 @@ gem 'devise'
 gem 'grape'
 gem 'grape-entity'
 
+# Json Web Token (JWT) for token based authentication
+gem 'jwt'
+
 # credit card payments
 gem 'stripe'
 
