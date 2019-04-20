@@ -43,11 +43,6 @@ room_types = [
 Hotel.all.each do |hotel|
   # Add room types to hotels
   hotel.room_types.create!(room_types)
-
-  # Add hotel rooms to hotels
-  hotel.room_types.each_with_index do |room_type, index|
-    hotel.hotel_rooms.create!(room_type_id: room_type.id, number: index + 1)
-  end
 end
 
 # Admin user for Admin Panel

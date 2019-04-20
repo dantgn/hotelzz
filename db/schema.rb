@@ -96,16 +96,6 @@ ActiveRecord::Schema.define(version: 2019_04_19_162806) do
     t.index ["reset_password_token"], name: "index_hotel_managers_on_reset_password_token", unique: true
   end
 
-  create_table "hotel_rooms", force: :cascade do |t|
-    t.bigint "hotel_id"
-    t.bigint "room_type_id"
-    t.integer "number", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["hotel_id"], name: "index_hotel_rooms_on_hotel_id"
-    t.index ["room_type_id"], name: "index_hotel_rooms_on_room_type_id"
-  end
-
   create_table "hotels", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -149,8 +139,6 @@ ActiveRecord::Schema.define(version: 2019_04_19_162806) do
   add_foreign_key "bookings", "guests"
   add_foreign_key "bookings", "hotels"
   add_foreign_key "bookings", "room_types"
-  add_foreign_key "hotel_rooms", "hotels"
-  add_foreign_key "hotel_rooms", "room_types"
   add_foreign_key "hotels", "hotel_managers"
   add_foreign_key "payments", "bookings"
   add_foreign_key "room_type_prices", "room_types"
