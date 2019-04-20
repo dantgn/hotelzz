@@ -203,38 +203,3 @@ curl -X PUT -H "Authorization: eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE1
   "currency": "usd"
 }
 ```
-
-## Decisions
-
-JsonWebToken for authentication: 
-- In this task I did not deal on creating/storing JWT.
-- I use it for API authentication of the task requests.
-- Token expiration is not considered.
-- by testing needs they can be obtained using: `Authentication::JsonWebToken.encode({ used_id: 1 })`.
-
-Stripe credit card payment:
-- Stripe offers different possibilities to handle payments. I chose the straight away method for the purposes of integrating it in this task. I assumed the source token to proceed with strype payment charge is obtained in Frontend while introducing credit card details.
-- I created a separate service for the payments, asking for the token, and providing stripes test as default one, from: https://stripe.com/docs/testing
-- If I would have to work on this, I would probably check suscription plan possibilities.
-
-CalculateRent / CheckAvailability
-- Are implemented as a separate services in `app/services/`, extracting it from the model based on Single Responsability Principle. It also make them easier to test.
-
-Rooom Type Prices
-- I decided to create this new table in order to handle monthly prices, so every month can have different prices. It can also use different currencies (even this is not deeply implemented).
-
-Users
-- I created different tables for different type of users Guest and HotelManager, because I think they will have different columns in database, but also are very different things. AdminUsers is just there for the admin panel.
-- I could have used same user table with polymorphic user_type but again, I think they might be quite different in a real app.
-
-Grape API
-- I have used Grape since I have experience on it, and made it easier to develop the app.
-- If I would have more time I might have invest time on check Rails API-only.
-
-Tests
-- I used RSpec for testing, together with Fabricator (similar to FactoryBot)
-- tests are splitted on `lib/`, `models`, `requests` and `services` depending on what is being tested.
-
-Credentials
-- I used Rails.application.credentials to store secrets like `stripe_api_key`.
-- In case of willing to test locally stripe credit card payments, you can just edit `config/initializers/stripe` where the `api_key` is defined and replace it by your testing key.
