@@ -1,18 +1,5 @@
 require 'rails_helper'
 
-RSpec.shared_examples('when authentication fails') do
-  let(:expected_response) do
-    { 'error' => '401 Unauthorized' }
-  end
-
-  it 'returns authorization error' do
-    subject
-
-    expect(JSON.parse(response.body)).to eq(expected_response)
-    expect(response.status).to eq(401)
-  end
-end
-
 RSpec.describe HotelzzAPI::V1::Bookings, type: :request do
   subject { post request_url }
   let(:check_in) { '2020/01/01' }
@@ -48,14 +35,14 @@ RSpec.describe HotelzzAPI::V1::Bookings, type: :request do
       end
 
       context 'and auth token no provided in headers' do
-        include_examples 'when authentication fails'
+        include_examples 'when jwt authentication fails'
       end
 
       context 'and auth token is provided in headers' do
         subject { post request_url, params: request_params, headers: headers }
 
-        context 'and authentication fails' do
-          include_examples 'when authentication fails'
+        context 'and jwt authentication fails' do
+          include_examples 'when jwt authentication fails'
         end
 
         context 'and authentication succeeds' do

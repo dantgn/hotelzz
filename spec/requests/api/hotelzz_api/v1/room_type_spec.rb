@@ -1,18 +1,5 @@
 require 'rails_helper'
 
-RSpec.shared_examples('when authentication fails') do
-  let(:expected_response) do
-    { 'error' => '401 Unauthorized' }
-  end
-
-  it 'returns authorization error' do
-    subject
-
-    expect(JSON.parse(response.body)).to eq(expected_response)
-    expect(response.status).to eq(401)
-  end
-end
-
 RSpec.describe HotelzzAPI::V1::RoomTypes, type: :request do
   subject { put request_url, params: request_params }
 
@@ -41,8 +28,8 @@ RSpec.describe HotelzzAPI::V1::RoomTypes, type: :request do
     let(:new_amount) { 800.0 }
     let(:new_currency) { 'eur' }
 
-    context 'when authentication  fails' do
-      include_examples 'when authentication fails'
+    context 'when jwt authentication fails' do
+      include_examples 'when jwt authentication fails'
     end
 
     context 'when authentication succeeds' do
@@ -55,7 +42,7 @@ RSpec.describe HotelzzAPI::V1::RoomTypes, type: :request do
       context 'and room_type does not belong to hotel_manager' do
         let(:room_type) { Fabricate(:room_type) }
 
-        include_examples 'when authentication fails'
+        include_examples 'when jwt authentication fails'
       end
 
       context 'and room_type belongs to hotel_manager' do
