@@ -49,8 +49,8 @@ module Hotels
       bookings = bookings.joins(:room_type).where('occupancy_limit >= ?', @guests) if @guests
       bookings.
         where(
-          '(? BETWEEN check_in AND check_out) OR (? BETWEEN check_in AND check_out)',
-          @check_in, @check_out
+          '(check_in <= ? AND ? < check_out) OR ( ? > check_in AND ? < check_out)',
+          @check_in, @check_in, @check_out, @check_out
         ).
         group(:room_type_id).
         count

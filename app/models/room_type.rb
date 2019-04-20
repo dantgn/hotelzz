@@ -12,8 +12,8 @@ class RoomType < ApplicationRecord
 
   def available?(check_in:, check_out:)
     bookings.paid.where(
-      '(? BETWEEN check_in AND check_out) OR (? BETWEEN check_in AND check_out)',
-      check_in, check_out
+      '(check_in <= ? AND ? < check_out) OR ( ? > check_in AND ? < check_out)',
+      check_in, check_in, check_out, check_out
     ).count < number_of_rooms
   end
 end

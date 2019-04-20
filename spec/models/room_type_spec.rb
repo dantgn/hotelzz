@@ -37,5 +37,14 @@ RSpec.describe RoomType, type: :model do
 
       it { expect(subject).to eq(true) }
     end
+
+    context 'when a booking finishes on selected check in date' do
+      subject { room_type.available?(check_in: check_in, check_out: check_out) }
+      let!(:booking) do
+        Fabricate(:booking, room_type: room_type, check_in: check_out, check_out: (check_out + 1.month))
+      end
+
+      it { expect(subject).to eq(true) }
+    end
   end
 end

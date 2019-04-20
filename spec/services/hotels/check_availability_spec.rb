@@ -82,14 +82,14 @@ RSpec.describe Hotels::CheckAvailability do
       end
     end
 
-    context 'when all rooms are available' do
+    context 'when there are no bookings' do
       let(:expected_response) { all_rooms_free }
 
       it { expect(subject).to eq(expected_response) }
     end
 
     context 'when no rooms available for requested number of guests' do
-      let(:guests) { [room_type1.number_of_rooms, room_type1.number_of_rooms].max + 1 }
+      let(:guests) { [room_type1.number_of_rooms, room_type2.number_of_rooms].max + 1 }
 
       it { expect(subject).to be_empty }
     end
@@ -131,10 +131,32 @@ RSpec.describe Hotels::CheckAvailability do
       end
     end
 
-    context 'when there is a booking for another dates' do
+    context 'when there a bookings for another dates but not for selected dates' do
       let(:expected_response) { all_rooms_free }
+      let!(:booking) do
+        Fabricate(:booking,
+                  hotel: hotel,
+                  room_type: room_type2,
+                  check_in: (check_in + 1.year),
+                  check_out: (check_out + 1.year))
+      end
 
       it 'offers all the rooms' do
+        expect(subject).to eq(expected_response)
+      end
+    end
+
+    context 'when a booking has check_out on selected check_in date' do
+      let(:expected_response) { all_rooms_free }
+      let!(:booking) do
+        Fabricate(:booking,
+                  hotel: hotel,
+                  room_type: room_type2,
+                  check_in: (check_in - 1.month),
+                  check_out: check_in)
+      end
+
+      it 'makes the room type available' do
         expect(subject).to eq(expected_response)
       end
     end
