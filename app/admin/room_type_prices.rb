@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ActiveAdmin.register RoomTypePrice do
-  # empty to alllow all default views
+  actions :index, :show
 end
