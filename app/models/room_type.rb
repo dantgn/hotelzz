@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RoomType < ApplicationRecord
   belongs_to :hotel
   has_many :hotel_rooms

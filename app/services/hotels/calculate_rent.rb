@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Hotels
   class CalculateRent
     def initialize(room_type:, check_in:, check_out:, currency: 'usd')

@@ -1,4 +1,6 @@
 module Hotels
+  # frozen_string_literal: true
+
   class CheckAvailability
     def initialize(hotel:, check_in:, check_out:, guests: nil)
       @hotel = hotel

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HotelManager < ApplicationRecord
   has_many :hotels
   # Include default devise modules. Others available are:

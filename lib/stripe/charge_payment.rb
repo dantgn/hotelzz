@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 # This service will provide a payment charge in stripe
 # The source is the token from the credit card. 
-# For this example we assume the token will be fetched in the Frontend while introducing credit card details,
+# For this task we assume the token will be fetched in the Frontend while introducing credit card details,
 # and passed to the service. For testing purposes a valid testing token from stripe is set as default.
 
 module Stripe
